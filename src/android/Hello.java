@@ -48,7 +48,7 @@ public class Hello extends CordovaPlugin {
         
         if (action.equals("greet")) {
             HdxUtil.SetPrinterPower(1);
-            sleep(500);
+            Thread.sleep(500);
             try {               
                 this.open_con(message);
             } catch (IOException ex) {
