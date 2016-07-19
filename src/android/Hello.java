@@ -42,19 +42,20 @@ public class Hello extends CordovaPlugin {
 
     @Override
     public boolean execute(String action, JSONArray data, CallbackContext callbackContext) throws JSONException {
-        
+                
         String message = data.getString(0);
         
         if (action.equals("greet")) {
+            HdxUtil.SetPrinterPower(1);
 
-            try {
-                
+            try {               
                 this.open_con(message);
-                
             } catch (IOException ex) {
                 
                 ex.printStackTrace();
             
+            } finally {
+                //HdxUtil.SetPrinterPower(0);
             }
             
             //String name = data.getString(0);
