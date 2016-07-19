@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.security.InvalidParameterException;
 
+import hdx.HdxUtil;
 
 import android_serialport_api.SerialPort;
 import android_serialport_api.SerialPortFinder;
