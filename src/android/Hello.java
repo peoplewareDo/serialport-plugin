@@ -25,7 +25,7 @@ public class Hello extends CordovaPlugin {
     public boolean open_con(String message) throws JSONException, SecurityException, IOException, InvalidParameterException {
 
         try {
-                File file = new File ("//dev/ttyS3");
+                File file = new File (HdxUtil.GetPrinterPort());
                 serialPort = new SerialPort(file, 115200, 0);
                 mOutputStream = serialPort.getOutputStream();
                 //mInputStream  = serialPort.getInputStream();
@@ -48,7 +48,7 @@ public class Hello extends CordovaPlugin {
         
         if (action.equals("greet")) {
             HdxUtil.SetPrinterPower(1);
-
+            sleep(500);
             try {               
                 this.open_con(message);
             } catch (IOException ex) {
@@ -56,7 +56,7 @@ public class Hello extends CordovaPlugin {
                 ex.printStackTrace();
             
             } finally {
-                //HdxUtil.SetPrinterPower(0);
+                HdxUtil.SetPrinterPower(0);
             }
             
             //String name = data.getString(0);
