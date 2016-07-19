@@ -23,6 +23,8 @@
       </feature>
     </config-file>
 
+    <lib-file src="src/android/libs/hdxutil.jar" arch="device" />
+
     <source-file src="src/android/Hello.java" target-dir="src/android_serialport_api"/>
     <source-file src="src/android/SerialPort.java" target-dir="src/android_serialport_api"/>
     <source-file src="src/android/SerialPortFinder.java" target-dir="src/android_serialport_api"/>
