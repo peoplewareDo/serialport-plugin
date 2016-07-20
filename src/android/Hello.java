@@ -47,6 +47,7 @@ public class Hello extends CordovaPlugin {
         String message = data.getString(0);
         
         if (action.equals("greet")) {
+            HdxUtil.SwitchSerialFunction(HdxUtil.SERIAL_FUNCTION_PRINTER);
             HdxUtil.SetPrinterPower(1);
             
             try {            
