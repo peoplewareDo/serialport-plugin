@@ -65,15 +65,12 @@ public class Hello extends CordovaPlugin {
                     HdxUtil.SetPrinterPower(1);
                     
                     try {            
-                        this.cordova.getActivity().sleep(500);   
-                        this.open_con(message);
-                    } catch (IOException ex) {
-                        
+                        cordova.getActivity().sleep(500);   
+                        open_con(message);
+                    } catch (IOException ex) {                        
                         ex.printStackTrace();
-                    } catch (InterruptedException ex) {
-                        
-                        ex.printStackTrace();
-                    
+                    } catch (InterruptedException ex) {                        
+                        ex.printStackTrace();                    
                     } finally {
                         HdxUtil.SetPrinterPower(0);
                     }
@@ -82,11 +79,8 @@ public class Hello extends CordovaPlugin {
             });            
 
             return true;
-
         } else {
-
             return false;
-
         }
     }
 }
