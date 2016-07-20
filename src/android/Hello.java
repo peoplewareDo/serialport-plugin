@@ -22,7 +22,7 @@ public class Hello extends CordovaPlugin {
     protected OutputStream mOutputStream;
     private InputStream mInputStream;
 
-    private void sendCommand(mOutputStream, int... command) {
+    private void sendCommand(OutputStream mOutputStream, int... command) {
 		try {
 			for (int i = 0; i < command.length; i++) {
 				mOutputStream.write(command[i]);
