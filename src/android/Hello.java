@@ -49,7 +49,7 @@ public class Hello extends CordovaPlugin {
         } catch (IOException ex) {
                 ex.printStackTrace();
                 return false;
-
+        }
         return true;
     }
 
