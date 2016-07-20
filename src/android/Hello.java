@@ -54,7 +54,7 @@ public class Hello extends CordovaPlugin {
     }
 
     @Override
-    public boolean execute(String action, JSONArray data, final CallbackContext callbackContext) {
+    public boolean execute(String action, JSONArray data, final CallbackContext callbackContext) throws JSONException {
                 
         final String message = data.getString(0);
         
