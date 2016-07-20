@@ -47,7 +47,8 @@ public class Hello extends CordovaPlugin {
                 Thread.sleep(2000);
                 mOutputStream.write(new String(message).getBytes());
 
-                
+        } catch (InterruptedException ex) {                        
+            ex.printStackTrace();                 
         } catch (IOException ex) {
                 ex.printStackTrace();
                 return false;
