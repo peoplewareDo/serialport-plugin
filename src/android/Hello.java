@@ -22,7 +22,7 @@ public class Hello extends CordovaPlugin {
     protected OutputStream mOutputStream;
     private InputStream mInputStream;
 
-    private void sendCommand(int... command) {
+    private void sendCommand(mOutputStream, int... command) {
 		try {
 			for (int i = 0; i < command.length; i++) {
 				mOutputStream.write(command[i]);
@@ -42,6 +42,8 @@ public class Hello extends CordovaPlugin {
                 mOutputStream = serialPort.getOutputStream();
                 //mInputStream  = serialPort.getInputStream();
                 //mOutputStream.write(new String(text).getBytes());
+                
+                sendCommand(mOutputStream, 0x1b,0x76);
                 mOutputStream.write(new String(message).getBytes());
 
                 
