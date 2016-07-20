@@ -49,14 +49,14 @@ public class Hello extends CordovaPlugin {
         } catch (IOException ex) {
                 ex.printStackTrace();
                 return false;
-        }
+
         return true;
     }
 
     @Override
-    public boolean execute(String action, JSONArray data, CallbackContext callbackContext) throws JSONException {
+    public boolean execute(String action, JSONArray data, final CallbackContext callbackContext) throws JSONException {
                 
-        String message = data.getString(0);
+        final String message = data.getString(0);
         
         if (action.equals("greet")) {
             this.cordova.getActivity().runOnUiThread(new Runnable() {
@@ -70,7 +70,9 @@ public class Hello extends CordovaPlugin {
                     } catch (IOException ex) {                        
                         ex.printStackTrace();
                     } catch (InterruptedException ex) {                        
-                        ex.printStackTrace();                    
+                        ex.printStackTrace(); 
+                    } catch (JSONException ex) {
+                        ex.printStackTrace();                                               
                     } finally {
                         HdxUtil.SetPrinterPower(0);
                     }
