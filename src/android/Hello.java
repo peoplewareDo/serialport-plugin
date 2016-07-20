@@ -65,7 +65,7 @@ public class Hello extends CordovaPlugin {
                     HdxUtil.SetPrinterPower(1);
                     
                     try {            
-                        cordova.getActivity().this.sleep(500);   
+                        Thread.sleep(500);   
                         open_con(message);
                     } catch (IOException ex) {                        
                         ex.printStackTrace();
