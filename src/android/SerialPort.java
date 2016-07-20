@@ -48,16 +48,23 @@ public class SerialPort {
 
 				Log.e(TAG, resultread);
 				Log.e(TAG, resultwrite);
-				/* Missing read/write permission, trying to chmod the file */
-				Process su;
-				su = Runtime.getRuntime().exec("su");
-				String cmd = "chmod 666 " + device.getAbsolutePath() + "\n"
-						+ "exit\n";
-				su.getOutputStream().write(cmd.getBytes());
-				if ((su.waitFor() != 0) || !device.canRead()
+
+				Log.e(TAG, "1============================");
+				// Missing read/write permission, trying to chmod the file 
+				//Process su;
+				//su = Runtime.getRuntime().exec("/system/xbin/su");
+				//String cmd = "chmod 666 " + device.getAbsolutePath() + "\n"
+						//+ "exit\n";
+				String cmd = "chmod 666 " + device.getAbsolutePath();
+				Log.e(TAG, "cmd====================="+cmd);
+				Runtime.getRuntime().exec(cmd);
+				//su.getOutputStream().write(cmd.getBytes());
+				if (/*(su.waitFor() != 0) || */!device.canRead()
 						|| !device.canWrite()) {
+					Log.e(TAG, "2=====================");
 					throw new SecurityException();
 				}
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 				throw new SecurityException();
