@@ -21,6 +21,18 @@ public class Hello extends CordovaPlugin {
     private SerialPort serialPort = null;
     protected OutputStream mOutputStream;
     private InputStream mInputStream;
+
+    private void sendCommand(int... command) {
+		try {
+			for (int i = 0; i < command.length; i++) {
+				mOutputStream.write(command[i]);
+				// Log.e(TAG,"command["+i+"] = "+Integer.toHexString(command[i]));
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		// / sleep(1);
+	}
     
     public boolean open_con(String message) throws JSONException, SecurityException, IOException, InvalidParameterException {
 
@@ -47,26 +59,27 @@ public class Hello extends CordovaPlugin {
         String message = data.getString(0);
         
         if (action.equals("greet")) {
-            HdxUtil.SwitchSerialFunction(HdxUtil.SERIAL_FUNCTION_PRINTER);
-            HdxUtil.SetPrinterPower(1);
-            
-            try {            
-                Thread.sleep(500);   
-                this.open_con(message);
-            } catch (IOException ex) {
-                
-                ex.printStackTrace();
-            } catch (InterruptedException ex) {
-                
-                ex.printStackTrace();
-            
-            } finally {
-                HdxUtil.SetPrinterPower(0);
-            }
-            
-            //String name = data.getString(0);
-            //String message = "Hello, " + name;
-            //callbackContext.success(message);
+            this.cordova.getActivity().runOnUiThread(new Runnable() {
+                public void run() {
+                    HdxUtil.SwitchSerialFunction(HdxUtil.SERIAL_FUNCTION_PRINTER);
+                    HdxUtil.SetPrinterPower(1);
+                    
+                    try {            
+                        this.cordova.getActivity().sleep(500);   
+                        this.open_con(message);
+                    } catch (IOException ex) {
+                        
+                        ex.printStackTrace();
+                    } catch (InterruptedException ex) {
+                        
+                        ex.printStackTrace();
+                    
+                    } finally {
+                        HdxUtil.SetPrinterPower(0);
+                    }
+                    callbackContext.success(); // Thread-safe.
+                }
+            });            
 
             return true;
 
