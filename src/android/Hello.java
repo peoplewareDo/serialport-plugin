@@ -45,11 +45,11 @@ public class Hello extends CordovaPlugin {
                 
                 sendCommand(mOutputStream, 0x1b,0x76);
                 Thread.sleep(500);
-                mOutputStream.write(new String(message).getBytes());
+                mOutputStream.write(message.getBytes());
                 sendCommand(mOutputStream, 0x0a);
-
+                Thread.sleep(1500);
         } catch (InterruptedException ex) {                        
-            ex.printStackTrace();                 
+                ex.printStackTrace();                 
         } catch (IOException ex) {
                 ex.printStackTrace();
                 return false;
