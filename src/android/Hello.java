@@ -31,10 +31,9 @@ public class Hello extends CordovaPlugin {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		// / sleep(1);
 	}
     
-    public boolean open_con(String message) throws JSONException, SecurityException, IOException, InvalidParameterException {
+    private boolean open_con(String message) throws JSONException, SecurityException, IOException, InvalidParameterException {
 
         try {
                 File file = new File(HdxUtil.GetPrinterPort());
@@ -44,11 +43,11 @@ public class Hello extends CordovaPlugin {
                 //mOutputStream.write(new String(text).getBytes());
                 
                 sendCommand(mOutputStream, 0x1b,0x76);
-                Thread.sleep(500);
+                //Thread.sleep(500);
                 mOutputStream.write(message.getBytes());
                 sendCommand(mOutputStream, 0x0a);
                 sendCommand(mOutputStream, 0x1b, 0x4a, 0x180);
-                Thread.sleep(1500);
+                //Thread.sleep(1500);
         } catch (InterruptedException ex) {                        
                 ex.printStackTrace();                 
         } catch (IOException ex) {
@@ -63,11 +62,60 @@ public class Hello extends CordovaPlugin {
     }
 
     @Override
-    public boolean execute(String action, JSONArray data, final CallbackContext callbackContext) throws JSONException {
+    public boolean execute(String action, final JSONArray data, final CallbackContext callbackContext) throws JSONException {
                 
         final String message = data.getString(0);
-        
-        if (action.equals("greet")) {
+        final int len = data.length();
+                
+        if (action.equals("open")) {
+            this.cordova.getActivity().runOnUiThread(new Runnable() {
+                public void run() {
+                    HdxUtil.SwitchSerialFunction(HdxUtil.SERIAL_FUNCTION_PRINTER);
+                    HdxUtil.SetPrinterPower(1);
+                    
+                    try {            
+                        File file = new File(HdxUtil.GetPrinterPort());
+                        serialPort = new SerialPort(file, 115200, 0);
+                        mOutputStream = serialPort.getOutputStream();
+                    } catch (IOException ex) {                        
+                        ex.printStackTrace();
+                        callbackContext.error();
+                    } catch (InterruptedException ex) {                        
+                        ex.printStackTrace(); 
+                        callbackContext.error();
+                    } catch (JSONException ex) {
+                        ex.printStackTrace(); 
+                        callbackContext.error();                                              
+                    }
+                    callbackContext.success(); // Thread-safe.
+                }
+            })     
+
+            return true;
+        } else if (action.equals("close")) {
+            this.cordova.getActivity().runOnUiThread(new Runnable() {
+                public void run() {
+                    
+                    try {
+                        Thread.sleep(500);
+                        serialPort.close();
+                        serialPort = null;
+                        mOutputStream.close();
+                        HdxUtil.SetPrinterPower(0);
+                        callbackContext.success(); // Thread-safe.
+                    } catch (IOException ex) {                        
+                        ex.printStackTrace();
+                        callbackContext.error();
+                    } catch (InterruptedException ex) {                        
+                        ex.printStackTrace(); 
+                        callbackContext.error();
+                    }                    
+                }
+            })     
+
+            return true;
+
+        } else if (action.equals("println")) {
             this.cordova.getActivity().runOnUiThread(new Runnable() {
                 public void run() {
                     HdxUtil.SwitchSerialFunction(HdxUtil.SERIAL_FUNCTION_PRINTER);
@@ -78,18 +126,50 @@ public class Hello extends CordovaPlugin {
                         open_con(message);
                     } catch (IOException ex) {                        
                         ex.printStackTrace();
+                        callbackContext.error();
                     } catch (InterruptedException ex) {                        
                         ex.printStackTrace(); 
+                        callbackContext.error();
                     } catch (JSONException ex) {
-                        ex.printStackTrace();                                               
+                        ex.printStackTrace();   
+                        callbackContext.error();                                            
                     } finally {
                         HdxUtil.SetPrinterPower(0);
                     }
                     callbackContext.success(); // Thread-safe.
                 }
-            });            
+            })     
 
             return true;
+        } else if (action.equals("sendCommand")) {
+            this.cordova.getActivity().runOnUiThread(new Runnable() {
+                public void run() {
+                    //HdxUtil.SwitchSerialFunction(HdxUtil.SERIAL_FUNCTION_PRINTER);
+                    //HdxUtil.SetPrinterPower(1);
+                    Integer[] commands = new Integer[len];
+                    
+                    for (int i=0; i<len; i++){ 
+                        commands[i] = data.getInt(i);
+                    } 
+                    try {            
+                        Thread.sleep(50);   
+                        sendCommand(mOutputStream, commands);
+                    } catch (IOException ex) {                        
+                        ex.printStackTrace();
+                        callbackContext.error();
+                    } catch (InterruptedException ex) {                        
+                        ex.printStackTrace(); 
+                        callbackContext.error();
+                    } catch (JSONException ex) {
+                        ex.printStackTrace();   
+                        callbackContext.error();                                            
+                    } finally {
+                        //HdxUtil.SetPrinterPower(0);
+                    }
+                    callbackContext.success(); // Thread-safe.
+                }
+            })              
+             return true;
         } else {
             return false;
         }
