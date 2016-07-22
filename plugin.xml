@@ -21,6 +21,10 @@
       </feature>
     </config-file>
 
+    <config-file target="AndroidManifest.xml" parent="/*">
+      <uses-permission android:name="android.permission.WAKE_LOCK" />
+    </config-file>    
+
     <lib-file src="src/android/libs/HdxUtil.jar" arch="device" />
 
     <source-file src="src/android/Hello.java" target-dir="src/android_serialport_api"/>
