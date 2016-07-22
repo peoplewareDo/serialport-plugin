@@ -89,7 +89,7 @@ public class Hello extends CordovaPlugin {
                     }
                     callbackContext.success(); // Thread-safe.
                 }
-            })     
+            });     
 
             return true;
         } else if (action.equals("close")) {
@@ -111,7 +111,7 @@ public class Hello extends CordovaPlugin {
                         callbackContext.error();
                     }                    
                 }
-            })     
+            });     
 
             return true;
 
@@ -138,7 +138,7 @@ public class Hello extends CordovaPlugin {
                     }
                     callbackContext.success(); // Thread-safe.
                 }
-            })     
+            });     
 
             return true;
         } else if (action.equals("sendCommand")) {
@@ -168,7 +168,7 @@ public class Hello extends CordovaPlugin {
                     }
                     callbackContext.success(); // Thread-safe.
                 }
-            })              
+            });              
              return true;
         } else {
             return false;
