@@ -79,13 +79,13 @@ public class Hello extends CordovaPlugin {
                         mOutputStream = serialPort.getOutputStream();
                     } catch (IOException ex) {                        
                         ex.printStackTrace();
-                        callbackContext.error();
+                        callbackContext.error(1);
                     } catch (InterruptedException ex) {                        
                         ex.printStackTrace(); 
-                        callbackContext.error();
+                        callbackContext.error(1);
                     } catch (JSONException ex) {
                         ex.printStackTrace(); 
-                        callbackContext.error();                                              
+                        callbackContext.error(1);                                              
                     }
                     callbackContext.success(); // Thread-safe.
                 }
@@ -105,10 +105,10 @@ public class Hello extends CordovaPlugin {
                         callbackContext.success(); // Thread-safe.
                     } catch (IOException ex) {                        
                         ex.printStackTrace();
-                        callbackContext.error();
+                        callbackContext.error(1);
                     } catch (InterruptedException ex) {                        
                         ex.printStackTrace(); 
-                        callbackContext.error();
+                        callbackContext.error(1);
                     }                    
                 }
             });     
@@ -126,13 +126,13 @@ public class Hello extends CordovaPlugin {
                         open_con(message);
                     } catch (IOException ex) {                        
                         ex.printStackTrace();
-                        callbackContext.error();
+                        callbackContext.error(1);
                     } catch (InterruptedException ex) {                        
                         ex.printStackTrace(); 
-                        callbackContext.error();
+                        callbackContext.error(1);
                     } catch (JSONException ex) {
                         ex.printStackTrace();   
-                        callbackContext.error();                                            
+                        callbackContext.error(1);                                            
                     } finally {
                         HdxUtil.SetPrinterPower(0);
                     }
@@ -156,13 +156,13 @@ public class Hello extends CordovaPlugin {
                         sendCommand(mOutputStream, commands);
                     } catch (IOException ex) {                        
                         ex.printStackTrace();
-                        callbackContext.error();
+                        callbackContext.error(1);
                     } catch (InterruptedException ex) {                        
                         ex.printStackTrace(); 
-                        callbackContext.error();
+                        callbackContext.error(1);
                     } catch (JSONException ex) {
                         ex.printStackTrace();   
-                        callbackContext.error();                                            
+                        callbackContext.error(1);                                            
                     } finally {
                         //HdxUtil.SetPrinterPower(0);
                     }
