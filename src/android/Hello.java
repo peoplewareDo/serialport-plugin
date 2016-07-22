@@ -146,7 +146,7 @@ public class Hello extends CordovaPlugin {
                 public void run() {
                     //HdxUtil.SwitchSerialFunction(HdxUtil.SERIAL_FUNCTION_PRINTER);
                     //HdxUtil.SetPrinterPower(1);
-                    Integer[] commands = new Integer[len];
+                    int[] commands = new int[len];
                     
                     for (int i=0; i<len; i++){ 
                         commands[i] = data.getInt(i);
