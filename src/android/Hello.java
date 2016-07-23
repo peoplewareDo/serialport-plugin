@@ -54,9 +54,9 @@ public class Hello extends CordovaPlugin {
                 ex.printStackTrace();
                 return false;
         } finally {
-                serialPort.close();
-                serialPort = null;
-                mOutputStream.close();
+                //serialPort.close();
+                //serialPort = null;
+                //mOutputStream.close();
         }
         return true;
     }
