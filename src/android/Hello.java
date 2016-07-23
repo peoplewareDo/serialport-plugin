@@ -128,9 +128,9 @@ public class Hello extends CordovaPlugin {
                     } catch (IOException ex) {                        
                         ex.printStackTrace();
                         callbackContext.error(1);
-                    } catch (InterruptedException ex) {                        
-                        ex.printStackTrace(); 
-                        callbackContext.error(1);
+                    //} catch (InterruptedException ex) {                        
+                     //   ex.printStackTrace(); 
+                     //   callbackContext.error(1);
                     } catch (JSONException ex) {
                         ex.printStackTrace();   
                         callbackContext.error(1);                                            
