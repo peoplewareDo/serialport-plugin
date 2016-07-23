@@ -97,7 +97,7 @@ public class Hello extends CordovaPlugin {
                 public void run() {
                     
                     try {
-                        Thread.sleep(1500);
+                        Thread.sleep(2000);
                         serialPort.close();
                         serialPort = null;
                         mOutputStream.close();
@@ -122,7 +122,7 @@ public class Hello extends CordovaPlugin {
                     //HdxUtil.SetPrinterPower(1);
                     
                     try {            
-                        Thread.sleep(500);   
+                        //Thread.sleep(500);   
                         open_con(message);
                         //Thread.sleep(1000);   
                     } catch (IOException ex) {                        
