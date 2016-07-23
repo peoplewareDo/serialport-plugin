@@ -42,7 +42,7 @@ public class Hello extends CordovaPlugin {
                 //mInputStream  = serialPort.getInputStream();
                 //mOutputStream.write(new String(text).getBytes());
                 
-                sendCommand(mOutputStream, 0x1b,0x76);
+                //sendCommand(mOutputStream, 0x1b,0x76);
                 //Thread.sleep(500);
                 mOutputStream.write(message.getBytes());
                 sendCommand(mOutputStream, 0x0a);
