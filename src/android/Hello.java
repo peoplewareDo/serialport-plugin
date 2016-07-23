@@ -97,7 +97,7 @@ public class Hello extends CordovaPlugin {
                 public void run() {
                     
                     try {
-                        Thread.sleep(1500);
+                        Thread.sleep(500);
                         serialPort.close();
                         serialPort = null;
                         mOutputStream.close();
