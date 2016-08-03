@@ -122,7 +122,7 @@ public class Hello extends CordovaPlugin {
                     //HdxUtil.SetPrinterPower(1);
                     
                     try {            
-                        //Thread.sleep(500);   
+                        Thread.sleep(50);   
                         open_con(message);
                         //Thread.sleep(1000);   
                     } catch (IOException ex) {                        
