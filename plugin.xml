@@ -3,14 +3,15 @@
         id="serialport-plugin"
         version="0.0.1">
 
-  <name>Hello</name>
+  <name>SerialPortPrinter</name>
+  <description>SerialPort printer Cordova Plugin</description>  
 
   <engines>
     <engine name="cordova" version=">=3.4.0"/>
   </engines>
 
-  <js-module src="www/hello.js" name="hello">
-    <clobbers target="hello" />
+  <js-module src="www/SerialPortPrinter.js" name="SerialPortPrinter">
+    <clobbers target="SerialPortPrinter" />
   </js-module>
 
   <platform name="android">
