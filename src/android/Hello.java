@@ -202,7 +202,12 @@ public class Hello extends CordovaPlugin {
                     
                     start2[7] = (byte) (height / 256);
                     
-                    mOutputStream.write(start2);
+                    try {
+                        mOutputStream.write(start2);
+                    } catch (IOException ex) {                        
+                            ex.printStackTrace();
+                            callbackContext.error(1);
+                    }
                     for (int i = 0; i < height; i++) {
 
                         for (int x = 0; x < tmp; x++)
@@ -218,12 +223,18 @@ public class Hello extends CordovaPlugin {
                         
                         //while ((printer_status & 0x13) != 0) {
                         //    Log.e(TAG, "printer_status=" + printer_status);
-                         //   try {
+                        try {
                                 Thread.sleep(50);
-                        //    } catch (InterruptedException e) {
-                        //    }
+                                mOutputStream.write(data_image);
+                        } catch (InterruptedException e) {
+                                ex.printStackTrace();
+                                callbackContext.error(1);                            
+                        } catch (IOException ex) {                        
+                                ex.printStackTrace();
+                                callbackContext.error(1);
+                        }
                         //}
-                        mOutputStream.write(data_image);
+                        
                         /*
                         * try { Thread.sleep(5); } catch (InterruptedException e) { }
                         */
