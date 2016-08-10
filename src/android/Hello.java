@@ -16,6 +16,10 @@ import hdx.HdxUtil;
 import android_serialport_api.SerialPort;
 import android_serialport_api.SerialPortFinder;
 
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.BitmapFactory;
+
 public class Hello extends CordovaPlugin {
 
     private SerialPort serialPort = null;
@@ -153,14 +157,14 @@ public class Hello extends CordovaPlugin {
                         for (int i=0; i<len; i++){ 
                             commands[i] = data.getInt(i);
                         }                                
-                        Thread.sleep(50);   
+                        //Thread.sleep(50);   
                         sendCommand(mOutputStream, commands);
                     //} catch (IOException ex) {                        
                     //    ex.printStackTrace();
                     //    callbackContext.error(1);
-                    } catch (InterruptedException ex) {                        
-                        ex.printStackTrace(); 
-                        callbackContext.error(1);
+                    //} catch (InterruptedException ex) {                        
+                    //    ex.printStackTrace(); 
+                    //    callbackContext.error(1);
                     } catch (JSONException ex) {
                         ex.printStackTrace();   
                         callbackContext.error(1);                                            
@@ -173,7 +177,54 @@ public class Hello extends CordovaPlugin {
              return true;
         } else if (action.equals("printImage")) {
             this.cordova.getActivity().runOnUiThread(new Runnable() {
+                
+                Bitmap bitmap = null;//BitmapFactory.decodeResource(this.cordova.getActivity().getResources(), R.drawable.image);
+                int startx = 10;
+
                 public void run() {
+                    byte[] start2 = { 0x1D, 0x76, 0x30, 0x30, 0x00, 0x00, 0x01, 0x00 };
+
+                    int width = bitmap.getWidth() + startx;
+                    int height = bitmap.getHeight();
+                    Log.e(TAG,"width:  "+width+" height :"+height);
+                    if (width > 384)
+                        width = 384;
+                    int tmp = (width + 7) / 8;
+                    byte[] data_image = new byte[tmp];
+                    byte xL = (byte) (tmp % 256);
+                    byte xH = (byte) (tmp / 256);
+                    start2[4] = xL;
+                    start2[5] = xH;
+                    start2[6] = (byte) (height % 256);
+                    
+                    start2[7] = (byte) (height / 256);
+                    
+                    mOutputStream.write(start2);
+                    for (int i = 0; i < height; i++) {
+
+                        for (int x = 0; x < tmp; x++)
+                            data_image[x] = 0;
+                        for (int x = startx; x < width; x++) {
+                            int pixel = bitmap.getPixel(x - startx, i);
+                            if (Color.red(pixel) == 0 || Color.green(pixel) == 0
+                                    || Color.blue(pixel) == 0) {
+                                // 高位在左，所以使用128 右移
+                                data_image[x / 8] += 128 >> (x % 8);// (byte) (128 >> (y % 8));
+                            }
+                        }
+                        
+                        //while ((printer_status & 0x13) != 0) {
+                        //    Log.e(TAG, "printer_status=" + printer_status);
+                         //   try {
+                                Thread.sleep(50);
+                        //    } catch (InterruptedException e) {
+                        //    }
+                        //}
+                        mOutputStream.write(data_image);
+                        /*
+                        * try { Thread.sleep(5); } catch (InterruptedException e) { }
+                        */
+                    }                    
 
                 }
             });                
