@@ -226,7 +226,7 @@ public class Hello extends CordovaPlugin {
                         try {
                                 Thread.sleep(50);
                                 mOutputStream.write(data_image);
-                        } catch (InterruptedException e) {
+                        } catch (InterruptedException ex) {
                                 ex.printStackTrace();
                                 callbackContext.error(1);                            
                         } catch (IOException ex) {                        
