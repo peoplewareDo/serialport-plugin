@@ -20,8 +20,11 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.BitmapFactory;
 
+import android.util.Log;
+
 public class Hello extends CordovaPlugin {
 
+    private static final String TAG = "SerialPortPrinterPlugin";
     private SerialPort serialPort = null;
     protected OutputStream mOutputStream;
     private InputStream mInputStream;
