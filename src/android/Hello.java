@@ -80,16 +80,17 @@ public class Hello extends CordovaPlugin {
                     HdxUtil.SwitchSerialFunction(HdxUtil.SERIAL_FUNCTION_PRINTER);
                     HdxUtil.SetPrinterPower(1);
                     
-                    try {            
+                    try {
+                        Thread.sleep(500);            
                         File file = new File(HdxUtil.GetPrinterPort());
                         serialPort = new SerialPort(file, 115200, 0);
                         mOutputStream = serialPort.getOutputStream();
                     } catch (IOException ex) {                        
                         ex.printStackTrace();
                         callbackContext.error(1);
-                    //} catch (InterruptedException ex) {                        
-                    //    ex.printStackTrace(); 
-                    //    callbackContext.error(1);
+                    } catch (InterruptedException ex) {                        
+                        ex.printStackTrace(); 
+                        callbackContext.error(1);
                     //} catch (JSONException ex) {
                     //    ex.printStackTrace(); 
                     //    callbackContext.error(1);                                              
