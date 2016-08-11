@@ -75,7 +75,7 @@ public class Hello extends CordovaPlugin {
         final int len = data.length();
                 
         if (action.equals("open")) {
-            this.cordova.getActivity().runOnUiThread(new Runnable() {
+            this.cordova.getThreadPool().execute(new Runnable() {
                 public void run() {
                     HdxUtil.SwitchSerialFunction(HdxUtil.SERIAL_FUNCTION_PRINTER);
                     HdxUtil.SetPrinterPower(1);
@@ -100,7 +100,7 @@ public class Hello extends CordovaPlugin {
 
             return true;
         } else if (action.equals("close")) {
-            this.cordova.getActivity().runOnUiThread(new Runnable() {
+            this.cordova.getThreadPool().execute(new Runnable() {
                 public void run() {
                     
                     try {
@@ -123,7 +123,7 @@ public class Hello extends CordovaPlugin {
             return true;
 
         } else if (action.equals("println")) {
-            this.cordova.getActivity().runOnUiThread(new Runnable() {
+            this.cordova.getThreadPool().execute(new Runnable() {
                 public void run() {
                     //HdxUtil.SwitchSerialFunction(HdxUtil.SERIAL_FUNCTION_PRINTER);
                     //HdxUtil.SetPrinterPower(1);
@@ -150,7 +150,7 @@ public class Hello extends CordovaPlugin {
 
             return true;
         } else if (action.equals("sendCommand")) {
-            this.cordova.getActivity().runOnUiThread(new Runnable() {
+            this.cordova.getThreadPool().execute(new Runnable() {
                 public void run() {
                     //HdxUtil.SwitchSerialFunction(HdxUtil.SERIAL_FUNCTION_PRINTER);
                     //HdxUtil.SetPrinterPower(1);
@@ -179,7 +179,7 @@ public class Hello extends CordovaPlugin {
             });              
              return true;
         } else if (action.equals("printImage")) {
-            this.cordova.getActivity().runOnUiThread(new Runnable() {
+            this.cordova.getThreadPool().execute(new Runnable() {
                 
                 Bitmap bitmap = null;//BitmapFactory.decodeResource(this.cordova.getActivity().getResources(), R.drawable.image);
                 int startx = 10;
