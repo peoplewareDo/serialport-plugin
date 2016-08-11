@@ -75,22 +75,21 @@ public class Hello extends CordovaPlugin {
         final int len = data.length();
                 
         if (action.equals("open")) {
-            this.cordova.getThreadPool().execute(new Runnable() {
+            this.cordova.getActivity().runOnUiThread(new Runnable() {
                 public void run() {
                     HdxUtil.SwitchSerialFunction(HdxUtil.SERIAL_FUNCTION_PRINTER);
                     HdxUtil.SetPrinterPower(1);
                     
-                    try {
-                        Thread.sleep(500);            
+                    try {           
                         File file = new File(HdxUtil.GetPrinterPort());
                         serialPort = new SerialPort(file, 115200, 0);
                         mOutputStream = serialPort.getOutputStream();
                     } catch (IOException ex) {                        
                         ex.printStackTrace();
                         callbackContext.error(1);
-                    } catch (InterruptedException ex) {                        
-                        ex.printStackTrace(); 
-                        callbackContext.error(1);
+                    //} catch (InterruptedException ex) {                        
+                    //    ex.printStackTrace(); 
+                    //    callbackContext.error(1);
                     //} catch (JSONException ex) {
                     //    ex.printStackTrace(); 
                     //    callbackContext.error(1);                                              
@@ -101,7 +100,7 @@ public class Hello extends CordovaPlugin {
 
             return true;
         } else if (action.equals("close")) {
-            this.cordova.getThreadPool().execute(new Runnable() {
+            this.cordova.getActivity().runOnUiThread(new Runnable() {
                 public void run() {
                     
                     try {
@@ -124,7 +123,7 @@ public class Hello extends CordovaPlugin {
             return true;
 
         } else if (action.equals("println")) {
-            this.cordova.getThreadPool().execute(new Runnable() {
+            this.cordova.getActivity().runOnUiThread(new Runnable() {
                 public void run() {
                     //HdxUtil.SwitchSerialFunction(HdxUtil.SERIAL_FUNCTION_PRINTER);
                     //HdxUtil.SetPrinterPower(1);
@@ -151,7 +150,7 @@ public class Hello extends CordovaPlugin {
 
             return true;
         } else if (action.equals("sendCommand")) {
-            this.cordova.getThreadPool().execute(new Runnable() {
+            this.cordova.getActivity().runOnUiThread(new Runnable() {
                 public void run() {
                     //HdxUtil.SwitchSerialFunction(HdxUtil.SERIAL_FUNCTION_PRINTER);
                     //HdxUtil.SetPrinterPower(1);
@@ -161,14 +160,14 @@ public class Hello extends CordovaPlugin {
                         for (int i=0; i<len; i++){ 
                             commands[i] = data.getInt(i);
                         }                                
-                        Thread.sleep(50);   
+                        //Thread.sleep(50);   
                         sendCommand(mOutputStream, commands);
                     //} catch (IOException ex) {                        
                     //    ex.printStackTrace();
                     //    callbackContext.error(1);
-                    } catch (InterruptedException ex) {                        
-                        ex.printStackTrace(); 
-                        callbackContext.error(1);
+                    //} catch (InterruptedException ex) {                        
+                    //    ex.printStackTrace(); 
+                    //    callbackContext.error(1);
                     } catch (JSONException ex) {
                         ex.printStackTrace();   
                         callbackContext.error(1);                                            
@@ -180,7 +179,7 @@ public class Hello extends CordovaPlugin {
             });              
              return true;
         } else if (action.equals("printImage")) {
-            this.cordova.getThreadPool().execute(new Runnable() {
+            this.cordova.getActivity().runOnUiThread(new Runnable() {
                 
                 Bitmap bitmap = null;//BitmapFactory.decodeResource(this.cordova.getActivity().getResources(), R.drawable.image);
                 int startx = 10;
