@@ -31,7 +31,6 @@ public class Hello extends CordovaPlugin {
     private StringBuffer mReception = new StringBuffer();
 
 
-    @Override
     protected void onDataReceived(final byte[] buffer, final int size) {
         this.cordova.getActivity().runOnUiThread(new Runnable() {
                 public void run() {
