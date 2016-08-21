@@ -41,12 +41,8 @@ public class Hello extends CordovaPlugin {
                     Log.e(TAG, "onReceived= " + buffer);
                     Log.e(TAG, "onReceived= " + mReception);
                 }
-        }
+        });
     }
-
-	protected void onDataReceived(final byte[] buffer, final int size,final int n) {
-
-    } 
 
     private void sendCommand(OutputStream mOutputStream, int... command) {
 		try {
