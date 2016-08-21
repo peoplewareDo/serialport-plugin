@@ -28,12 +28,24 @@ public class Hello extends CordovaPlugin {
     private SerialPort serialPort = null;
     protected OutputStream mOutputStream;
     private InputStream mInputStream;
+    private StringBuffer mReception = new StringBuffer();
 
 
-	@Override
+    @Override
+    protected void onDataReceived(final byte[] buffer, final int size) {
+        this.cordova.getActivity().runOnUiThread(new Runnable() {
+                public void run() {
+                    if (mReception != null) {
+                        mReception.append(new String(buffer, 0, size));
+                    }
+                    Log.e(TAG, "onReceived= " + buffer);
+                    Log.e(TAG, "onReceived= " + mReception);
+                }
+        }
+    }
+
 	protected void onDataReceived(final byte[] buffer, final int size,final int n) {
-        Log.e(TAG, "onReceived= " + buffer);
-        Log.e(TAG, "onReceived= " + String.format("%c",(char) buffer[i]));
+
     } 
 
     private void sendCommand(OutputStream mOutputStream, int... command) {
