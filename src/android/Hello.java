@@ -29,7 +29,29 @@ public class Hello extends CordovaPlugin {
     protected OutputStream mOutputStream;
     private InputStream mInputStream;
     private StringBuffer mReception = new StringBuffer();
+    private ReadThread mReadThread = null;    
 
+    private class ReadThread extends Thread {
+
+        @Override
+        public void run() {
+            super.run();
+            while(!isInterrupted()) {
+                int size;
+                try {
+                    byte[] buffer = new byte[64];
+                    if (mInputStream == null) return;
+                    size = mInputStream.read(buffer);
+                    if (size > 0) {
+                        onDataReceived(buffer, size);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return;
+                }
+            }
+        }
+    }
 
     protected void onDataReceived(final byte[] buffer, final int size) {
         this.cordova.getActivity().runOnUiThread(new Runnable() {
@@ -98,6 +120,9 @@ public class Hello extends CordovaPlugin {
                         File file = new File(HdxUtil.GetPrinterPort());
                         serialPort = new SerialPort(file, 115200, 0);
                         mOutputStream = serialPort.getOutputStream();
+                        mInputStream = serialPort.getInputStream();
+                        mReadThread = new ReadThread();                        
+                        mReadThread.start();                        
                     } catch (IOException ex) {                        
                         ex.printStackTrace();
                         callbackContext.error(1);
@@ -122,8 +147,13 @@ public class Hello extends CordovaPlugin {
                         serialPort.close();
                         serialPort = null;
                         mOutputStream.close();
+                        mInputStream.close();
                         HdxUtil.SetPrinterPower(0);
                         callbackContext.success(); // Thread-safe.
+
+                        if (mReadThread != null) {
+                            mReadThread.interrupt();
+                        }                        
                     } catch (IOException ex) {                        
                         ex.printStackTrace();
                         callbackContext.error(1);
