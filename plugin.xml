@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
         id="serialport-plugin"
-        version="0.0.1">
+        version="0.1.1">
 
   <name>SerialPortPrinter</name>
   <description>SerialPort printer Cordova Plugin</description>  
@@ -17,8 +17,8 @@
   <platform name="android">
 
     <config-file target="res/xml/config.xml" parent="/*">
-      <feature name="Hello">
-        <param name="android-package" value="android_serialport_api.Hello"/>
+      <feature name="SerialPortPrinter">
+        <param name="android-package" value="android_serialport_api.SerialPortPrinter"/>
       </feature>
     </config-file>
 
@@ -28,7 +28,7 @@
 
     <lib-file src="src/android/libs/HdxUtil.jar" arch="device" />
 
-    <source-file src="src/android/Hello.java" target-dir="src/android_serialport_api"/>
+    <source-file src="src/android/SerialPortPrinter.java" target-dir="src/android_serialport_api"/>
     <source-file src="src/android/SerialPort.java" target-dir="src/android_serialport_api"/>
     <source-file src="src/android/SerialPortFinder.java" target-dir="src/android_serialport_api"/>
     <source-file src="src/android/libs/armeabi/libserial_port.so" target-dir="libs/armeabi"/>

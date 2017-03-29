@@ -20,9 +20,13 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.BitmapFactory;
 
+import android.content.Context;
+import android.os.PowerManager;
+import android.os.PowerManager.WakeLock;
+
 import android.util.Log;
 
-public class Hello extends CordovaPlugin {
+public class SerialPortPrinter extends CordovaPlugin {
 
     private static final String TAG = "SerialPortPrinterPlugin";
     private SerialPort serialPort = null;
@@ -30,7 +34,17 @@ public class Hello extends CordovaPlugin {
     private InputStream mInputStream;
     private StringBuffer mReception = new StringBuffer();
     private ReadThread mReadThread = null;    
+    private WakeLock lock;
 
+    @Override
+    public void initialize(CordovaInterface cordova, CordovaWebView webView) {
+        super.initialize(cordova, webView);
+        
+		PowerManager pm = (PowerManager) getApplicationContext().getSystemService(Context.POWER_SERVICE);
+		lock = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, TAG);        
+
+    }
+    
     private class ReadThread extends Thread {
 
         @Override
@@ -115,7 +129,8 @@ public class Hello extends CordovaPlugin {
                 public void run() {
                     HdxUtil.SwitchSerialFunction(HdxUtil.SERIAL_FUNCTION_PRINTER);
                     HdxUtil.SetPrinterPower(1);
-                    
+                    //Thread.sleep(500);
+                    lock.acquire();
                     try {           
                         File file = new File(HdxUtil.GetPrinterPort());
                         serialPort = new SerialPort(file, 115200, 0);
@@ -160,7 +175,9 @@ public class Hello extends CordovaPlugin {
                     } catch (InterruptedException ex) {                        
                         ex.printStackTrace(); 
                         callbackContext.error(1);
-                    }                    
+                    } finally {
+                        lock.release();
+                    }                 
                 }
             });     
 
@@ -186,7 +203,7 @@ public class Hello extends CordovaPlugin {
                         ex.printStackTrace();   
                         callbackContext.error(1);                                            
                     } finally {
-                        //HdxUtil.SetPrinterPower(0);
+                        //HdxUtil.SetPrinterPower(0);                        
                     }
                     callbackContext.success(); // Thread-safe.
                 }
