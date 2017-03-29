@@ -40,7 +40,7 @@ public class SerialPortPrinter extends CordovaPlugin {
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
         
-		PowerManager pm = (PowerManager) getApplicationContext().getSystemService(Context.POWER_SERVICE);
+		PowerManager pm = (PowerManager) cordova.getActivity().getApplicationContext().getSystemService(Context.POWER_SERVICE);
 		lock = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, TAG);        
 
     }
