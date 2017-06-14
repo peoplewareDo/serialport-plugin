@@ -158,7 +158,7 @@ public class SerialPortPrinter extends CordovaPlugin {
                 public void run() {
                     
                     try {
-                        Thread.sleep(30000);
+                        Thread.sleep(15000);
                         serialPort.close();
                         serialPort = null;
                         mOutputStream.close();
