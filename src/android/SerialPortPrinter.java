@@ -219,9 +219,9 @@ public class SerialPortPrinter extends CordovaPlugin {
                     try {     
                         final int len = data.getString(0).length();
                         int[] commands = new int[len];
-                        
+
                         for (int i=0; i<len; i++){ 
-                            commands[i] = data.getInt(i);
+                            commands[i] = data.getString(0).getInt(i);
                         }                                
                         //Thread.sleep(50);   
                         sendCommand(mOutputStream, commands);
