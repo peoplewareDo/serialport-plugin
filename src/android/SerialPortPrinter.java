@@ -122,7 +122,7 @@ public class SerialPortPrinter extends CordovaPlugin {
     public boolean execute(String action, final JSONArray data, final CallbackContext callbackContext) throws JSONException {
                 
         final String message = data.getString(0);
-        final int len = data.length();
+        final String sleep = data.length() > 1 ? args.getInt(1) : 1000;        
                 
         if (action.equals("open")) {
             this.cordova.getActivity().runOnUiThread(new Runnable() {
@@ -158,7 +158,7 @@ public class SerialPortPrinter extends CordovaPlugin {
                 public void run() {
                     
                     try {
-                        Thread.sleep(5000);
+                        Thread.sleep(sleep);
                         serialPort.close();
                         serialPort = null;
                         mOutputStream.close();
@@ -190,7 +190,7 @@ public class SerialPortPrinter extends CordovaPlugin {
                     //HdxUtil.SetPrinterPower(1);
                     
                     try {            
-                        Thread.sleep(1000);   
+                        Thread.sleep(sleep);   
                         open_con(message);
                         //Thread.sleep(1000);   
                     } catch (IOException ex) {                        
@@ -215,20 +215,21 @@ public class SerialPortPrinter extends CordovaPlugin {
                 public void run() {
                     //HdxUtil.SwitchSerialFunction(HdxUtil.SERIAL_FUNCTION_PRINTER);
                     //HdxUtil.SetPrinterPower(1);
+                    final int len = data.getString(0).length();
                     int[] commands = new int[len];
                     
                     try {     
                         for (int i=0; i<len; i++){ 
                             commands[i] = data.getInt(i);
                         }                                
-                        Thread.sleep(1000);   
+                        //Thread.sleep(50);   
                         sendCommand(mOutputStream, commands);
                     // } catch (IOException ex) {                        
                     //     ex.printStackTrace();
                     //     callbackContext.error(1);
-                    } catch (InterruptedException ex) {                        
-                         ex.printStackTrace(); 
-                         callbackContext.error(1);
+                    // } catch (InterruptedException ex) {                        
+                    //      ex.printStackTrace(); 
+                    //      callbackContext.error(1);
                     } catch (JSONException ex) {
                         ex.printStackTrace();   
                         callbackContext.error(1);                                            
