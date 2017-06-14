@@ -215,10 +215,11 @@ public class SerialPortPrinter extends CordovaPlugin {
                 public void run() {
                     //HdxUtil.SwitchSerialFunction(HdxUtil.SERIAL_FUNCTION_PRINTER);
                     //HdxUtil.SetPrinterPower(1);
-                    final int len = data.getString(0).length();
-                    int[] commands = new int[len];
                     
                     try {     
+                        final int len = data.getString(0).length();
+                        int[] commands = new int[len];
+                        
                         for (int i=0; i<len; i++){ 
                             commands[i] = data.getInt(i);
                         }                                
