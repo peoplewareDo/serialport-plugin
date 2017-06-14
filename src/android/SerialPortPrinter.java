@@ -122,7 +122,7 @@ public class SerialPortPrinter extends CordovaPlugin {
     public boolean execute(String action, final JSONArray data, final CallbackContext callbackContext) throws JSONException {
                 
         final String message = data.getString(0);
-        final long sleep = data.length() > 1 ? data.getInt(1) : 1000;        
+        final long sleep = data.length() > 1 ? data.getInt(1) : 1000l;        
                 
         if (action.equals("open")) {
             this.cordova.getActivity().runOnUiThread(new Runnable() {
@@ -217,9 +217,9 @@ public class SerialPortPrinter extends CordovaPlugin {
                     //HdxUtil.SetPrinterPower(1);
                     
                     try {     
-                        final int len = data.getString(0).length();
+                        final int len = data.length();
                         int[] commands = new int[len];
-                        
+
                         for (int i=0; i<len; i++){ 
                             commands[i] = data.getInt(i);
                         }                                
