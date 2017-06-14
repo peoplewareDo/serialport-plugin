@@ -217,7 +217,7 @@ public class SerialPortPrinter extends CordovaPlugin {
                     //HdxUtil.SetPrinterPower(1);
                     
                     try {     
-                        final int len = data.length();
+                        final int len = data.getString(0).length();
                         int[] commands = new int[len];
 
                         for (int i=0; i<len; i++){ 
