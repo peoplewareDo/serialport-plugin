@@ -190,7 +190,7 @@ public class SerialPortPrinter extends CordovaPlugin {
                     //HdxUtil.SetPrinterPower(1);
                     
                     try {            
-                        Thread.sleep(1000);   
+                        Thread.sleep(4000);   
                         open_con(message);
                         //Thread.sleep(1000);   
                     } catch (IOException ex) {                        
