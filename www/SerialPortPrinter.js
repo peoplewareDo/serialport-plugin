@@ -4,7 +4,7 @@ module.exports = {
     open: function (port, successCallback, errorCallback) {
         cordova.exec(successCallback, errorCallback, "SerialPortPrinter", "open", [port]);
     },
-    close: function (port, successCallback, errorCallback) {
+    close: function (port, sleep, successCallback, errorCallback) {
         cordova.exec(successCallback, errorCallback, "SerialPortPrinter", "close", [port, sleep]);
     },        
     println: function (message, sleep, successCallback, errorCallback) {
