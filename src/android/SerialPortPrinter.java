@@ -221,11 +221,11 @@ public class SerialPortPrinter extends CordovaPlugin {
                         for (int i=0; i<len; i++){ 
                             commands[i] = data.getInt(i);
                         }                                
-                        //Thread.sleep(200);   
+                        Thread.sleep(1000);   
                         sendCommand(mOutputStream, commands);
-                    //} catch (IOException ex) {                        
-                    //    ex.printStackTrace();
-                    //    callbackContext.error(1);
+                    } catch (IOException ex) {                        
+                        ex.printStackTrace();
+                        callbackContext.error(1);
                     // } catch (InterruptedException ex) {                        
                     //     ex.printStackTrace(); 
                     //     callbackContext.error(1);
