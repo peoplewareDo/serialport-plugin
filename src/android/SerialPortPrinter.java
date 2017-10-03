@@ -75,9 +75,30 @@ public class SerialPortPrinter extends CordovaPlugin {
                     }
                     Log.e(TAG, "onReceived= " + buffer);
                     Log.e(TAG, "onReceived= " + mReception);
+
+                    // CallbackContext callback = mApplication.getCallbackContext();
+                    // if (callback != null) {
+                    //     PluginResult result = new PluginResult(PluginResult.Status.OK, dataBuffer);
+                    //     result.setKeepCallback(true);
+                    //     callback.sendPluginResult(result);
+                    // }
+                                            
                 }
         });
     }
+
+	public void registry(final CallbackContext callbackContext){
+		if (serialPort != null) {
+            // this.cordova.getActivity().getApplication();
+			// mApplication.setCallback(callbackContext);
+			// PluginResult result = new PluginResult(PluginResult.Status.NO_RESULT);
+	        // result.setKeepCallback(true);
+	        // mApplication.getCallbackContext().sendPluginResult(result);
+		} else {
+			callbackContext.error("serialPort null");
+		}
+		
+	}    
 
     private void sendCommand(OutputStream mOutputStream, int... command) {
 		try {
@@ -123,8 +144,16 @@ public class SerialPortPrinter extends CordovaPlugin {
                 
         final String message = data.getString(0);
         final long sleep = data.length() > 1 ? data.getLong(1) : 1000l;        
-                
-        if (action.equals("open")) {
+
+        if (action.equals("getSerialPort")) {
+			JSONArray resArr = new JSONArray();
+			String[] entryValues = mSerialPortFinder.getAllDevicesPath();
+			for (int i = 0; i < entryValues.length; i++) {
+				resArr.put(i, entryValues[i]);
+			}
+			callbackContext.success(resArr);
+			return true;
+        } else if (action.equals("open")) {
             this.cordova.getActivity().runOnUiThread(new Runnable() {
                 public void run() {
                     HdxUtil.SwitchSerialFunction(HdxUtil.SERIAL_FUNCTION_PRINTER);

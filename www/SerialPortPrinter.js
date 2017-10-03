@@ -1,6 +1,9 @@
 /*global cordova, module*/
 
 module.exports = {
+    getSerialPort: function(successCallback, errorCallback) {
+        exec(successCallback, errorCallback, "SerialPortPrinter", "getSerialPort", []);
+    },    
     open: function (port, successCallback, errorCallback) {
         cordova.exec(successCallback, errorCallback, "SerialPortPrinter", "open", [port]);
     },
@@ -12,6 +15,9 @@ module.exports = {
     },
     sendCommand: function (array, successCallback, errorCallback) {
         cordova.exec(successCallback, errorCallback, "SerialPortPrinter", "sendCommand", array);
-    }
+    },
+    startNotify: function(successCallback, errorCallback){
+        exec(successCallback, errorCallback, "SerialPortPrinter", "registry", []);
+    }    
 
 };
