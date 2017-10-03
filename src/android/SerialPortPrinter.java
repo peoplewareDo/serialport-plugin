@@ -34,6 +34,7 @@ public class SerialPortPrinter extends CordovaPlugin {
     private InputStream mInputStream;
     private StringBuffer mReception = new StringBuffer();
     private ReadThread mReadThread = null;    
+    private SerialPortFinder mSerialPortFinder = new SerialPortFinder();
     private WakeLock lock;
 
     @Override
