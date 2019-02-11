@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
-        id="serialport-plugin"
-        version="0.2.2">
+<plugin xmlns="http://www.phonegap.com/ns/plugins/1.0" id="serialport-plugin" version="0.2.3">
 
   <name>SerialPortPrinter</name>
-  <description>SerialPort printer Cordova Plugin</description>  
+  <description>SerialPort printer Cordova Plugin</description>
 
   <engines>
     <engine name="cordova" version=">=3.4.0"/>
@@ -24,7 +22,7 @@
 
     <config-file target="AndroidManifest.xml" parent="/*">
       <uses-permission android:name="android.permission.WAKE_LOCK" />
-    </config-file>    
+    </config-file>
 
     <lib-file src="src/android/libs/HdxUtil.jar" arch="device" />
 
