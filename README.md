@@ -21,7 +21,7 @@ THIS PLUGIN IS STILL ON EARLY DEV STAGE. DON'T EXPECT TO WORK YET.
 ## Using
 Clone the plugin
 
-    $ git clone https://github.com/fabiomig/serialport-plugin.git
+    $ git clone https://github.com/peoplewareDo/serialport-plugin.git
 
 Create a new Cordova Project
 
@@ -30,7 +30,7 @@ Create a new Cordova Project
 Install the plugin
 
     $ cd hello
-    $ cordova plugin add https://github.com/fabiomig/serialport-plugin.git
+    $ cordova plugin add https://github.com/peoplewareDo/serialport-plugin.git
     
 Install Android platform
 
